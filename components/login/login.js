@@ -48,12 +48,12 @@ class Login extends Component {
     }
   }
 
-  /* renderRedirect = () => {
+  renderRedirect = () => {
     if (this.state.redirect === true) {
       console.log(this.state.redirect)
-      return <Redirect to='/' />
+      return this.props.navigation.navigate("Home");
     }
-  } */
+  } 
 
   mostrarErrores() {
     this.props.clearCurrentErrors();
@@ -88,6 +88,7 @@ class Login extends Component {
             placeholder="Enter password"
             onChangeText={this.valuePassword}
             value={this.state.password} />
+          {this.renderRedirect()}
           <Button
             title='OK'
             onPress={e => this.obtieneLogin(e)} />
