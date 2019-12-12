@@ -1,4 +1,5 @@
 import { SESSION_ON, SESSION_OFF, NO_ERRORS } from '../constants'
+const localStorage = require('react-native-local-storage');
 
 // inicia el state con los datos que le definimos
 const initialState = {
@@ -11,6 +12,8 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SESSION_ON:
+      localStorage.save('success', action.payload.success)
+      localStorage.save('token', action.payload.token)
       return {
         ...state,
         success: action.payload.success,
@@ -18,6 +21,7 @@ export default (state = initialState, action) => {
         errors: action.payload.errors
       }
     case SESSION_OFF:
+      localStorage.clear()
       return {
         ...state,
         success: action.payload.success,
