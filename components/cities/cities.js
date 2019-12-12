@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, TextInput,ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TextInput, ScrollView } from 'react-native';
 import { connect } from "react-redux";
 import { getAllCities } from "../store/actions/citiesActions";
 
@@ -21,7 +21,7 @@ class Cities extends Component {
     }
 
     render() {
-        let {filteredCities} = this.state
+        let { filteredCities } = this.state
         return (
             <ScrollView>
                 <Text>Filter by City name:</Text>
@@ -32,26 +32,26 @@ class Cities extends Component {
                     value={this.state.filter}
                 />
 
-                {this.props.loading 
-                ? (<View><Text>nothing</Text></View>) 
-                : filteredCities.length === 0 
-                ? (<View><Text>City not found</Text></View> ) 
-                : filteredCities.sort((a, b) => {
-                      if (a.name > b.name) {
-                        return 1;
-                      }
-                      if (a.name < b.name) {
-                        return -1;
-                      }
-                      return 0;
-                    }).map(city => {
-                      return (
-                        <View key={city._id}>
-                          <Image source={{uri:city.url}} style={{width: '80%', height: '40%'}}/>
-                          <Text>{city.name}</Text>
-                          <Text>{city.country}</Text>
-                        </View>);
-                    })}
+                {this.props.loading
+                    ? (<View><Text>nothing</Text></View>)
+                    : filteredCities.length === 0
+                        ? (<View><Text>City not found</Text></View>)
+                        : filteredCities.sort((a, b) => {
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            if (a.name < b.name) {
+                                return -1;
+                            }
+                            return 0;
+                        }).map(city => {
+                            return (
+                                <View key={city._id}>
+                                    <Image source={{ uri: city.url }} style={{ width: '80%', height: 200 }} />
+                                    <Text>{city.name}</Text>
+                                    <Text>{city.country}</Text>
+                                </View>);
+                        })}
             </ScrollView>
         )
     }
