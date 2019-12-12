@@ -11,8 +11,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SESSION_ON:
-      localStorage.setItem('success', action.payload.success)
-      localStorage.setItem('token', action.payload.token)
       return {
         ...state,
         success: action.payload.success,
@@ -20,7 +18,6 @@ export default (state = initialState, action) => {
         errors: action.payload.errors
       }
     case SESSION_OFF:
-      localStorage.clear()
       return {
         ...state,
         success: action.payload.success,

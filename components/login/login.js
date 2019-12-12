@@ -16,9 +16,7 @@ class Login extends Component {
     errors: ""
   };
 
-  valueUser(e) {
-    this.setState({ user: e });
-  }
+  valueUser = user => this.setState({user})
 
   componentDidUpdate(prevProps) {
     if (this.props.success !== prevProps.success) {
@@ -34,9 +32,7 @@ class Login extends Component {
     }
   }
 
-  valuePassword(e) {
-    this.setState({ password: e });
-  }
+  valuePassword = password => this.setState({password});
 
   obtieneLogin(e) {
     let user = {
@@ -52,12 +48,12 @@ class Login extends Component {
     }
   }
 
-  renderRedirect = () => {
+  /* renderRedirect = () => {
     if (this.state.redirect === true) {
       console.log(this.state.redirect)
       return <Redirect to='/' />
     }
-  }
+  } */
 
   mostrarErrores() {
     this.props.clearCurrentErrors();
@@ -86,11 +82,11 @@ class Login extends Component {
           <Text style={{ textAlign: 'center' }}>login</Text>
           <TextInput
             placeholder="Enter email"
-            onChangeText={e => this.valueUser(e.target.value)}
+            onChangeText={this.valueUser}
             value={this.state.user} />
           <TextInput
             placeholder="Enter password"
-            onChangeText={e => this.valuePassword(e.target.value)}
+            onChangeText={this.valuePassword}
             value={this.state.password} />
           <Button
             title='OK'

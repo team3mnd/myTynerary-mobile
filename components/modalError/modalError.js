@@ -13,13 +13,7 @@ export default class ModalError extends Component {
       <View>
         <Text>Error</Text>
         <Text>{this.props.errors}</Text>
-        <Button icon={
-          <Icon
-            name="fa-times"
-            size={15}
-            color="white"
-          />
-        }
+        <Button 
           title="Close" onPress={() => this.mostrar()}/>
       </View>
     )
