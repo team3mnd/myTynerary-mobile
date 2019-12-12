@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { createAppContainer , createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-//import { Provider } from 'react-redux';
-//import store from './components/store/store';
+import Login from './components/login/login.js';
+import createAcount from './components/signup/signup.js';
+
+import { Provider } from 'react-redux';
+import store from './components/store/store';
 
 import Home from './components/Home/home.js';
 import Cities from './components/cities/cities.js';
@@ -13,13 +16,19 @@ import Cities from './components/cities/cities.js';
 export default class App extends React.Component {
 	render() {
 	  return(
-		   <AppContainer />
+			<Provider store={store}>
+		   		<AppContainer />
+		   	</Provider>
 		   );
 	}
   }
   const TabNavigator = createBottomTabNavigator({
 	Home: Home,
-	Cities: Cities,
+	Cities: Cities
   });
 
-const AppContainer = createAppContainer(TabNavigator);
+const AppContainer = createAppContainer(createSwitchNavigator({
+	init : TabNavigator,
+	login : Login,
+	signup: createAcount
+}));

@@ -4,12 +4,16 @@ import ImageLogo from './imageLogo.js'
 //import { createBottomTabNavigator } from 'react-navigation';
 import Slider from './carousel.js'
 import ButtonLogin from '../nav/buttonLogin.js'
+import { createAppContainer } from 'react-navigation';
+
+//stack
+
 
 export default class Home extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ButtonLogin />
+        <ButtonLogin navigation={this.props.navigation}/>
         <ImageLogo />
         <Slider />
       </View>

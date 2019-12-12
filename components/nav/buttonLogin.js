@@ -7,9 +7,7 @@ import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 class NavBar extends React.PureComponent {
     _menu = null;
   
-    setMenuRef = ref => {
-      this._menu = ref;
-    };
+    setMenuRef = ref => {this._menu = ref};
   
     hideMenu = () => {
       this._menu.hide();
@@ -25,10 +23,9 @@ class NavBar extends React.PureComponent {
           <Menu
           ref={this.setMenuRef}
           button={<FontAwesomeIcon onPress={this.showMenu} icon={ faUserCircle } size={32} color={'black'} />}
-        >
-            
-            <MenuItem onPress={this.hideMenu}>Login</MenuItem>
-            <MenuItem onPress={this.hideMenu}>Create Account</MenuItem>
+        > 
+            <MenuItem onPress={()=>{this.hideMenu();this.props.navigation.navigate('login')}}>Login</MenuItem>
+            <MenuItem onPress={()=>{this.hideMenu();this.props.navigation.navigate('signup')}}>Create Account</MenuItem>
           </Menu>
         </View>
       );
@@ -42,4 +39,5 @@ class NavBar extends React.PureComponent {
         }
 
   })
+  
   export default NavBar;

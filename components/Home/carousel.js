@@ -88,11 +88,11 @@ export default class Slider extends React.Component {
   }
   render() {
     return (
-      <View style={{flex: 2,  maxHeight: '40%', marginBottom: 5 }}>
+      <View style={{flex: 2,  maxHeight: '55%' }}>
         <Carousel
           data={this.state.carouselItems}
-          sliderWidth={400}
-          itemWidth={380}
+          sliderWidth={600}
+          itemWidth={480}
           renderItem={this.renderItem}
         />
       </View>
