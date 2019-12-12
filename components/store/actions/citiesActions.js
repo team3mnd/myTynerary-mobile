@@ -11,7 +11,7 @@ const fetchDataCities = cities => {
 };
 
 const getCitiesList = ()  =>
-   fetch("http://192.168.0.242:5000/cities", { method: "GET" })
+   fetch("https://mytinerary-back.herokuapp.com/cities", { method: "GET" })
     .then(response => response.json())
     .then(cities => cities)
 
