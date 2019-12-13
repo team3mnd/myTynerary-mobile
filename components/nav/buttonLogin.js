@@ -4,9 +4,9 @@ import Menu, { MenuItem } from 'react-native-material-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
-import * as jwt from 'react-native-pure-jwt';
-const localStorage = require('react-native-local-storage');
 import { Image } from 'react-native'
+import {AsyncStorage} from 'react-native';
+const jwtDecode = require('jwt-decode');
 
 class NavBar extends React.PureComponent {
   state = {
@@ -16,14 +16,16 @@ class NavBar extends React.PureComponent {
   };
 
   componentDidMount() {
-    //const token = localStorage.get('token');
-    //const tokenDecoded = jwt.decode(token)
-    //this.setState({ token });
-    if (localStorage.get('success') === 'true') {
-      //const userName = tokenDecoded.username;
-      //const imageUrl = tokenDecoded.picture
-      this.setState('../images/MYtineraryLogo.png');
-      this.setState('username')
+    const token = AsyncStorage.getItem('token');
+    console.log(token)
+    // const tokenDecoded = jwtDecode(token)
+    this.setState({ token });
+    if (AsyncStorage.getItem('success') === 'true') {
+      Console.log('entroo')
+      const userName = tokenDecoded.username;
+      const imageUrl = tokenDecoded.picture
+      this.setState({imageUrl});
+      this.setState({userName})
     }
   }
   _menu = null;
@@ -41,9 +43,8 @@ class NavBar extends React.PureComponent {
   render() {
     return (
       <View style={style.container}>
-        <>
         {
-          localStorage.get('success') === 'true'
+          AsyncStorage.getItem('success') === 'true'
             ?
             <Menu ref={this.setMenuRef} button={<View style={style.containerImageProfile}>
               <Image style={{ width: "60px", height: "60px", borderRadius: "50%", padding: '5%' }}
@@ -60,7 +61,6 @@ class NavBar extends React.PureComponent {
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('signup') }}>Create Account</MenuItem>
             </Menu>
         }
-        </>
       </View>
     );
   }
@@ -68,8 +68,10 @@ class NavBar extends React.PureComponent {
 const style = StyleSheet.create({
   container: {
     alignItems: 'flex-start',
-    width: '50%',
-    margin: 9
+    justifyContent: 'flex-start',
+    width: '100%',
+    marginTop:9,
+    paddingLeft:9
   },
   containerImageProfile: {
     position: 'relative',
