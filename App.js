@@ -29,8 +29,8 @@ export default class App extends React.Component {
   });
 
 const AppContainer = createAppContainer(createSwitchNavigator({
-	signup: createAcount,
 	init : TabNavigator,
+	signup: createAcount,
 	login : Login,	
 	itineraries: listItinerary
 }));
