@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, TextInput } from 'react-native';
 import ModalError from '../modalError/modalError'
-import styles from '../../css/styles'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
+import { StyleSheet } from 'react-native';
 
 class Login extends Component {
   state = {
@@ -78,7 +78,7 @@ class Login extends Component {
           <ModalError errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
           : <View></View>
         }
-        <View>
+        <View style={styles.containerGeneral}>
           <Text style={{ textAlign: 'center' }}>login</Text>
           <TextInput
             placeholder="Enter email"
@@ -97,6 +97,25 @@ class Login extends Component {
     )
   }
 }
+const styles = StyleSheet.create({
+  containerGeneral: {
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      width: '90%',
+      borderStyle: 'solid',
+      borderColor: 'grey',
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4,
+  }
+})
 
 const mapStateToProps = (state) => {
   return {
