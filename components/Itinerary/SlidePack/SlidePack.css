@@ -1,0 +1,15 @@
+.container-card{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.texto-centrado{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 2px #010100;
+}

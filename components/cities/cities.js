@@ -1,74 +1,153 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, Image, TextInput, ScrollView } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, TextInput, ScrollView, ImageBackground, TouchableHighlight } from 'react-native';
 import { connect } from "react-redux";
 import { getAllCities } from "../store/actions/citiesActions";
 
 class Cities extends Component {
-    state = {
-        filter: '',
-        filteredCities: []
-    }
+  state = {
+    filter: '',
+    filteredCities: []
+  }
 
-    componentDidMount() {
-        this.props.getCities();
-    }
+  componentDidMount() {
+    this.props.getCities();
+  }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.cities !== prevProps.cities)
-            this.setState({
-                filteredCities: this.props.cities
-            });
-    }
+  componentDidUpdate(prevProps) {
+    if (this.props.cities !== prevProps.cities)
+      this.setState({
+        filteredCities: this.props.cities
+      });
+  }
 
-    render() {
-        let { filteredCities } = this.state
-        return (
-            <ScrollView>
-                <Text>Filter by City name:</Text>
-                <TextInput
-                    style={{ height: 40 }}
-                    placeholder="Example : Roma"
-                    onChangeText={(filter) => this.setState({ filter })}
-                    value={this.state.filter}
-                />
+  filterCities = valueInput => {
+    let resultFilter = this.props.cities;
+    resultFilter = resultFilter.filter(cities => {
+      let name = cities.name.toLowerCase();
+      return name.startsWith(valueInput);
+    });
+    this.setState({
+      filteredCities: resultFilter
+    });
+  };
 
-                {this.props.loading
-                    ? (<View><Text>nothing</Text></View>)
-                    : filteredCities.length === 0
-                        ? (<View><Text>City not found</Text></View>)
-                        : filteredCities.sort((a, b) => {
-                            if (a.name > b.name) {
-                                return 1;
-                            }
-                            if (a.name < b.name) {
-                                return -1;
-                            }
-                            return 0;
-                        }).map(city => {
-                            return (
-                                <View key={city._id}>
-                                    <Image source={{ uri: city.url }} style={{ width: '80%', height: 200 }} />
-                                    <Text>{city.name}</Text>
-                                    <Text>{city.country}</Text>
-                                </View>);
-                        })}
-            </ScrollView>
-        )
-    }
+  handleChange = e => {
+    this.filterCities(e.toLowerCase());
+    this.setState({ filter: e })
+  };
+
+  render() {
+    let { filteredCities } = this.state
+    return (
+      <View style={styles.appContainer}>
+        <ScrollView>
+          <View style={styles.filterContainer}>
+            <Text style={{ color: 'black' }}
+            >Filter by City name:</Text>
+            <TextInput
+              style={{
+                width: 200,
+                height: 40,
+                borderColor: 'black',
+                borderWidth: 2,
+                textAlign: 'center',
+                marginVertical: 5,
+              }}
+              placeholder="Example: Madrid"
+              onChangeText={
+                (filter) => this.handleChange(filter)
+              }
+              value={this.state.filter}
+            />
+          </View>
+
+          {/* <ScrollView contentContainerStyle={styles.svContainer}> */}
+
+          {this.props.loading
+            ? (<View><Text>loading...</Text></View>)
+            : filteredCities.length === 0
+              ? (<View><Text>City not found</Text></View>)
+              : filteredCities.sort((a, b) => {
+                if (a.name > b.name) {
+                  return 1;
+                }
+                if (a.name < b.name) {
+                  return -1;
+                }
+                return 0;
+              }).map(city => {
+                return (
+                  <View style={styles.appCities} key={city._id}>
+                    <TouchableHighlight
+                      onPress={() => { this.props.navigation.navigate('listItinerary') }}>
+                      <ImageBackground
+                        source={{ uri: city.url }}
+                        style={{
+                          width: 400, height: 200,
+                        }}
+                      >
+                        <View>
+                          <Text
+                            style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.name}</Text>
+                          <Text style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.country}</Text>
+                        </View>
+                      </ImageBackground>
+                    </TouchableHighlight>
+                  </View>
+                );
+              })}
+        </ScrollView>
+      </View>
+    )
+  }
 }
+
+const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  filterContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 45,
+    marginBottom: 20,
+  },
+  svContainer: {
+    flex: 1,
+    width: '100%',
+    height: '80%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'white',
+  },
+  appCities: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: 200,
+    backgroundColor: 'blue',
+    marginBottom: 20,
+  },
+})
 
 
 const mapStateToProps = state => {
-    return {
-        cities: state.cityReducer.cities,
-        loading: state.cityReducer.isFetching
-    };
+  return {
+    cities: state.cityReducer.cities,
+    loading: state.cityReducer.isFetching
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        getCities: () => dispatch(getAllCities())
-    };
+  return {
+    getCities: () => dispatch(getAllCities())
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cities);
