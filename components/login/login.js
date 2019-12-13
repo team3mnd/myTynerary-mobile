@@ -6,6 +6,9 @@ import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
+
 class Login extends Component {
   state = {
     user: "",
@@ -16,7 +19,7 @@ class Login extends Component {
     errors: ""
   };
 
-  valueUser = user => this.setState({user})
+  valueUser = user => this.setState({ user })
 
   componentDidUpdate(prevProps) {
     if (this.props.success !== prevProps.success) {
@@ -32,7 +35,7 @@ class Login extends Component {
     }
   }
 
-  valuePassword = password => this.setState({password});
+  valuePassword = password => this.setState({ password });
 
   obtieneLogin(e) {
     let user = {
@@ -53,7 +56,7 @@ class Login extends Component {
       console.log(this.state.redirect)
       return this.props.navigation.navigate("Home");
     }
-  } 
+  }
 
   mostrarErrores() {
     this.props.clearCurrentErrors();
@@ -93,6 +96,10 @@ class Login extends Component {
             title='OK'
             onPress={e => this.obtieneLogin(e)} />
         </View>
+        <Button title='return'
+          onPress={e => this.props.navigation.navigate('init')}>
+        </Button>
+
       </>
     )
   }
