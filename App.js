@@ -6,6 +6,7 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import Login from './components/login/login.js';
 import createAcount from './components/signup/signup.js';
+import ListItinerary from './components/Itinerary/ListItinerary';
 
 import { Provider } from 'react-redux';
 import store from './components/store/store';
@@ -65,5 +66,6 @@ const AppContainer = createAppContainer(createSwitchNavigator({
 	init : TabNavigator,
 	login : Login,
 	signup: createAcount,
-	Logout: Logout
+	Logout: Logout,
+	listItinerary: ListItinerary
 }));
