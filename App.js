@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
-import { createAppContainer , createSwitchNavigator} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import Login from './components/login/login.js';
@@ -14,19 +14,52 @@ import store from './components/store/store';
 import Home from './components/Home/home.js';
 import Cities from './components/cities/cities.js';
 
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
+
 export default class App extends React.Component {
 	render() {
-	  return(
+		return (
 			<Provider store={store}>
-		   		<AppContainer />
-		   	</Provider>
-		   );
+				<AppContainer />
+			</Provider>
+		);
 	}
-  }
-  const TabNavigator = createBottomTabNavigator({
-	Home: Home,
-	Cities: Cities
-  });
+}
+
+const TabNavigatorConfig = {
+	activeTintColor: '#e91e63',
+}
+const TabNavigator = createBottomTabNavigator({
+	Home: {
+		screen: Home,
+		navigationOptions: () => ({
+			tabBarIcon: ({ tintColor }) => (
+				<FontAwesomeIcon icon={faHome} size={28} color={'white'} />
+			)
+		})
+	},
+	Cities: {
+		screen: Cities,
+		navigationOptions: () => ({
+			tabBarIcon: ({ tintColor }) => (
+				<FontAwesomeIcon icon={faCity} size={28} color={'white'} />
+			)
+		})
+	}
+}, {
+	tabBarOptions: {
+		//showLabel: false,
+		labelStyle: {
+			fontSize: 18,
+		},// hide labels
+		activeTintColor: '#F8F8F8', // active icon color
+		inactiveTintColor: '#586589',  // inactive icon color
+		style: {
+			backgroundColor: '#171F33' // TabBar background
+		}
+	}
+})
 
 const AppContainer = createAppContainer(createSwitchNavigator({
 	init : TabNavigator,
