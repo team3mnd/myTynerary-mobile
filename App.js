@@ -12,6 +12,7 @@ import store from './components/store/store';
 
 import Home from './components/Home/home.js';
 import Cities from './components/cities/cities.js';
+import listItinerary from './components/Itinerary/ListInierary.js';
 
 export default class App extends React.Component {
 	render() {
@@ -28,7 +29,8 @@ export default class App extends React.Component {
   });
 
 const AppContainer = createAppContainer(createSwitchNavigator({
+	signup: createAcount,
 	init : TabNavigator,
-	login : Login,
-	signup: createAcount
+	login : Login,	
+	itineraries: listItinerary
 }));
