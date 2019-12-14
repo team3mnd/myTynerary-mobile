@@ -17,11 +17,10 @@ class NavBar extends React.PureComponent {
 
   componentDidMount() {
     const token = AsyncStorage.getItem('token');
+    //let tokenDecoded = jwtDecode(token)
     console.log(token)
-    // const tokenDecoded = jwtDecode(token)
-    this.setState({ token });
     if (AsyncStorage.getItem('success') === 'true') {
-      Console.log('entroo')
+      console.log('entroo')
       const userName = tokenDecoded.username;
       const imageUrl = tokenDecoded.picture
       this.setState({imageUrl});
@@ -59,6 +58,7 @@ class NavBar extends React.PureComponent {
             >
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('login') }}>Login</MenuItem>
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('signup') }}>Create Account</MenuItem>
+              <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('Logout') }}>Log Out</MenuItem>
             </Menu>
         }
       </View>

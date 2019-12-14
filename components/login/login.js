@@ -43,7 +43,7 @@ class Login extends Component {
       password: this.state.password,
       useGoogle: false
     };
-    this.props.login(user)
+     this.props.login(user)
     if (this.props.errors) {
       this.setState({
         mostrarErrores: true
