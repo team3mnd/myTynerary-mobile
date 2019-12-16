@@ -50,6 +50,7 @@ class Cities extends Component {
                 height: 40,
                 borderColor: 'black',
                 borderWidth: 2,
+                borderRadius: 10,
                 textAlign: 'center',
                 marginVertical: 5,
               }}
