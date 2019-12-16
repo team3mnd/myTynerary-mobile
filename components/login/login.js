@@ -4,6 +4,7 @@ import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
+import { StyleSheet } from 'react-native';
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
@@ -42,7 +43,10 @@ class Login extends Component {
       password: this.state.password,
       useGoogle: false
     };
-    this.props.login(user)
+     this.props.login(user)
+    if(! this.props.errors){
+      this.redirect()
+    }
     if (this.props.errors) {
       this.setState({
         mostrarErrores: true
@@ -50,7 +54,7 @@ class Login extends Component {
     }
   }
 
-  renderRedirect = () => {
+  redirect = () => {
     if (this.state.redirect === true) {
       console.log(this.state.redirect)
       return this.props.navigation.navigate("Home");
@@ -108,10 +112,28 @@ class Login extends Component {
           </View>
         </>
       </View>
-
     )
   }
 }
+const styles = StyleSheet.create({
+  containerGeneral: {
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      width: '90%',
+      borderStyle: 'solid',
+      borderColor: 'grey',
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4,
+  }
+})
 
 const styles = StyleSheet.create({
   mainContainer: {

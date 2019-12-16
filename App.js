@@ -13,6 +13,7 @@ import store from './components/store/store';
 
 import Home from './components/Home/home.js';
 import Cities from './components/cities/cities.js';
+import Logout from './components/logout/logout.js'
 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
@@ -65,5 +66,6 @@ const AppContainer = createAppContainer(createSwitchNavigator({
 	init : TabNavigator,
 	login : Login,
 	signup: createAcount,
+	Logout: Logout,
 	listItinerary: ListItinerary
 }));
