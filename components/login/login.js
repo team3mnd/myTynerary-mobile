@@ -44,6 +44,9 @@ class Login extends Component {
       useGoogle: false
     };
      this.props.login(user)
+    if(! this.props.errors){
+      this.redirect()
+    }
     if (this.props.errors) {
       this.setState({
         mostrarErrores: true
@@ -91,7 +94,7 @@ class Login extends Component {
             placeholder="Enter password"
             onChangeText={this.valuePassword}
             value={this.state.password} />
-          {this.redirect()}
+          {/* {this.redirect()} */}
           <Button
             title='OK'
             onPress={e => this.obtieneLogin(e)} />

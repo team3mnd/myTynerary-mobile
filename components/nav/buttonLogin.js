@@ -5,8 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
 import { Image } from 'react-native'
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 const jwtDecode = require('jwt-decode');
+let success = '';
 
 class NavBar extends React.PureComponent {
   state = {
@@ -16,16 +17,23 @@ class NavBar extends React.PureComponent {
   };
 
   componentDidMount() {
-    const token = AsyncStorage.getItem('token');
-    //let tokenDecoded = jwtDecode(token)
-    console.log(token)
-    if (AsyncStorage.getItem('success') === 'true') {
-      console.log('entroo')
-      const userName = tokenDecoded.username;
-      const imageUrl = tokenDecoded.picture
-      this.setState({imageUrl});
-      this.setState({userName})
-    }
+    let tokenDecoded = ''
+    AsyncStorage.getItem("token").then((value) => {
+      tokenDecoded = jwtDecode(value);
+      console.log(tokenDecoded);
+    });
+    AsyncStorage.getItem("success").then((value) => {
+      success = value
+      if (success === "true") {
+        console.log('entroo')
+        let imageUrl = tokenDecoded.picture;
+        let userName = tokenDecoded.username;
+        this.setState({ imageUrl });
+        this.setState({ userName })
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
   }
   _menu = null;
 
@@ -43,12 +51,13 @@ class NavBar extends React.PureComponent {
     return (
       <View style={style.container}>
         {
-          AsyncStorage.getItem('success') === 'true'
+          success === 'true'
             ?
-            <Menu ref={this.setMenuRef} button={<View style={style.containerImageProfile}>
-              <Image style={{ width: "60px", height: "60px", borderRadius: "50%", padding: '5%' }}
-                source={this.state.imageUrl} /></View>}>
-              <MenuItem>{this.state.userName}</MenuItem>
+            // <Image style={{ width: 60, height: 60, borderRadius: 50, padding: 5 }}
+            // source={this.state.imageUrl} onPress={this.showMenu}/>
+                
+            <Menu ref={this.setMenuRef}  button={<FontAwesomeIcon onPress={this.showMenu} icon={faUserCircle} size={32} color={'black'} />}>
+              <MenuItem>Hola {this.state.userName}!</MenuItem>
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('Logout') }}>Log Out</MenuItem>
             </Menu> :
 
@@ -58,7 +67,6 @@ class NavBar extends React.PureComponent {
             >
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('login') }}>Login</MenuItem>
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('signup') }}>Create Account</MenuItem>
-              <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('Logout') }}>Log Out</MenuItem>
             </Menu>
         }
       </View>
@@ -70,8 +78,8 @@ const style = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     width: '100%',
-    marginTop:9,
-    paddingLeft:9
+    marginTop: 9,
+    paddingLeft: 9
   },
   containerImageProfile: {
     position: 'relative',

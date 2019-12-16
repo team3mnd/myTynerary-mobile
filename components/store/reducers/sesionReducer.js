@@ -1,5 +1,5 @@
 import { SESSION_ON, SESSION_OFF, NO_ERRORS } from '../constants'
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 // inicia el state con los datos que le definimos
 const initialState = {
@@ -12,7 +12,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case SESSION_ON:
-      AsyncStorage.setItem('success', action.payload.success)
+      AsyncStorage.setItem('success', JSON.stringify(action.payload.success))
       AsyncStorage.setItem('token', action.payload.token)
       return {
         ...state,
@@ -22,6 +22,7 @@ export default (state = initialState, action) => {
       }
     case SESSION_OFF:
       AsyncStorage.clear()
+      console.log('token borrado')
       return {
         ...state,
         success: action.payload.success,
