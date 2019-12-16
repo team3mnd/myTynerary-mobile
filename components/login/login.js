@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, StyleSheet } from 'react-native';
 import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
@@ -79,31 +79,39 @@ class Login extends Component {
       this.props.login(user)
     }
     return (
-      <>
-        {(this.state.mostrarErrores && this.state.errors) ?
-          <ModalError errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
-          : <View></View>
-        }
-        <View style={styles.containerGeneral}>
-          <Text style={{ textAlign: 'center' }}>login</Text>
-          <TextInput
-            placeholder="Enter email"
-            onChangeText={this.valueUser}
-            value={this.state.user} />
-          <TextInput
-            placeholder="Enter password"
-            onChangeText={this.valuePassword}
-            value={this.state.password} />
-          {/* {this.redirect()} */}
-          <Button
-            title='OK'
-            onPress={e => this.obtieneLogin(e)} />
-        </View>
-        <Button title='return'
-          onPress={e => this.props.navigation.navigate('init')}>
-        </Button>
-
-      </>
+      <View style={styles.mainContainer}>
+        <>
+          {(this.state.mostrarErrores && this.state.errors) ?
+            <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
+            : <View style={styles.errorContainer}></View>
+          }
+          <View style={styles.formContainer}>
+            <Text style={{ textAlign: 'center', fontSize: 30 }}>Login</Text>
+            <TextInput
+              keyboardType='email-address'
+              placeholder="Enter email"
+              onChangeText={this.valueUser}
+              value={this.state.user}
+              style={styles.textInputContainer} />
+            <TextInput
+              secureTextEntry={true}
+              placeholder="Enter password"
+              onChangeText={this.valuePassword}
+              value={this.state.password}
+              style={styles.textInputContainer} />
+            <View style={styles.buttonOKContainer}>
+              <Button
+                title='OK'
+                onPress={e => this.obtieneLogin(e)} />
+            </View>
+            {this.renderRedirect()}
+          </View>
+          <View style={styles.buttonRETContainer}>
+            <Button title='return'
+              onPress={e => this.props.navigation.navigate('init')} />
+          </View>
+        </>
+      </View>
     )
   }
 }
@@ -126,6 +134,54 @@ const styles = StyleSheet.create({
       elevation: 4,
   }
 })
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  errorContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: 20,
+  },
+  formContainer: {
+    flex: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginTop: '50%'
+  },
+  textInputContainer: {
+    width: 200,
+    height: 40,
+    color: 'black',
+    borderColor: 'black',
+    borderWidth: 2,
+    borderRadius: 10,
+    textAlign: 'center',
+    marginVertical: 5,
+  },
+  buttonOKContainer: {
+    flex: 1,
+    width: 200,
+    height: 40,
+    marginVertical: 5,
+  },
+  buttonRETContainer: {
+    flex: 1,
+    width: '100%',
+    height: 40,
+    marginVertical: 0,
+    position: 'absolute',
+    bottom: 0
+  },
+});
 
 const mapStateToProps = (state) => {
   return {

@@ -50,6 +50,7 @@ class Cities extends Component {
                 height: 40,
                 borderColor: 'black',
                 borderWidth: 2,
+                borderRadius: 10,
                 textAlign: 'center',
                 marginVertical: 5,
               }}
@@ -79,7 +80,7 @@ class Cities extends Component {
                 return (
                   <View style={styles.appCities} key={city._id}>
                     <TouchableHighlight
-                      onPress={() => { this.props.navigation.navigate('listItinerary') }}>
+                      onPress={() => { this.props.navigation.navigate('listItinerary', { city : city.name, country : city.country}) }}>
                       <ImageBackground
                         source={{ uri: city.url }}
                         style={{
@@ -95,7 +96,7 @@ class Cities extends Component {
                     </TouchableHighlight>
                   </View>
                 );
-              })}
+              })} 
         </ScrollView>
       </View>
     )
