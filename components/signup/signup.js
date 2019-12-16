@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, StyleSheet, TextInput, Text, View, Button } from 'react-native';
+import { ScrollView, Image, StyleSheet, TextInput, Text, View, Button, Picker } from 'react-native';
+import { CheckBox } from 'react-native-elements';
 
 
 export default class SignUp extends Component {
   state = {
-    imageProfile: 'http://svgur.com/i/65U.svg',
+    imageProfile: 'https://www.selectforsakring.se/wp-content/uploads/sites/5/2018/09/anonymous.png',
     expandChangeImage: false,
     textAddImage: 0,
     img: '',
@@ -34,20 +35,22 @@ export default class SignUp extends Component {
     let user = {
       firstName: this.state.firstName,
       lastName: this.state.lastName,
-      password: this.state.password,
-      userName: this.state.user,
+      password: this.state.Password,
+      userName: this.state.username,
       mail: this.state.email,
       country: this.state.country,
       picture: this.state.imageProfile
     };
-    if (!(this.state.checkTC)) {
+
+    console.log(user);
+    if ((this.state.checkTC)) {
       this.setState({
         errors: "You have to accept Terms and Conditions agreement",
         mostrarErrores: true
       })
     }
     else {
-      fetch('https://mytinerary-back.herokuapp.com/signup/users/add', {
+      fetch('https://mytinerary-back.herokuapp.com/users/add', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -60,7 +63,6 @@ export default class SignUp extends Component {
           if (res.expressErrors || res.databaseErrors) {
             if (res.expressErrors) {
               if (res.expressErrors.errors.length === 2) {
-
                 this.setState({
                   errors: "Invalid Email & password (5 characters minimum)",
                   mostrarErrores: true
@@ -79,7 +81,6 @@ export default class SignUp extends Component {
                 })
               }
             }
-
             if (res.databaseErrors) {
               if (res.databaseErrors.errors.mail && res.databaseErrors.errors.userName) {
                 this.setState({
@@ -103,31 +104,22 @@ export default class SignUp extends Component {
             }
           }
           else {
-            this.setState({
-              redirect: true
-            })
+            this.props.navigation.navigate('init');
           }
         })
         .catch(error => console.log("catch", error))
     }
   }
 
-  renderRedirect = () => {
-    if (this.state.redirect === true) {
-      this.props.navigation.navigate('init')
-    }
-  }
-
   render() {
     return (
       <ScrollView>
-        {this.renderRedirect()}
         <Text>Create Acount</Text>
         <Image
-          source={{ uri: 'https://www.selectforsakring.se/wp-content/uploads/sites/5/2018/09/anonymous.png' }}
+          source={{ uri: this.state.imageProfile }}
           style={{ width: '80%', height: 220, borderRadius: 50 }} />
         {this.state.textAddImage === 0 && (
-          <Button title='Add Photo?'
+          <Button title='+'
             onPress={() =>
               this.setState({
                 expandChangeImage: !this.state.expandChangeImage
@@ -158,6 +150,7 @@ export default class SignUp extends Component {
           value={this.state.username} />
         <Text>Password:</Text>
         <TextInput
+          secureTextEntry={true}
           style={{
             width: '100%',
             borderBottomColor: '#000000',
@@ -192,13 +185,30 @@ export default class SignUp extends Component {
           }}
           onChangeText={(lastName) => this.setState({ lastName })}
           value={this.state.lastName} />
-        <Button title='Submit' onPress={() => { this.obtenerDatos() }}>
+          <Text>Select your country</Text>
+        <Picker
+          mode = 'dropdown'
+          selectedValue={this.state.country}
+          style={{ height: 50, width: '60%' }}
+          onValueChange={(itemValue, itemIndex) =>
+            this.setState({ country: itemValue })
+          }>
+          <Picker.Item label="Colombia" value="Colombia" />
+          <Picker.Item label="England" value="England" />
+          <Picker.Item label="France" value="France" />
+          <Picker.Item label="Germany" value="Germany" />
+          <Picker.Item label="Holland" value="Holland" />
+          <Picker.Item label="Spain" value="Spain" />
+          <Picker.Item label="United States" value="United States" />
+        </Picker>
+        <CheckBox
+          title='Click Here'
+          checked={this.state.checkTC}
+          onPress={() => { this.setState({ checkTC: !this.state.checkTC }) }}
+        />
 
-        </Button>
-
-        <Button title='return'
-          onPress={e => this.props.navigation.navigate('init')}>
-        </Button>
+        <Button title='Submit' onPress={() => { this.obtenerDatos() }} />
+        <Button title='return' onPress={e => this.props.navigation.navigate('init')} />
       </ScrollView>
     )
   }
