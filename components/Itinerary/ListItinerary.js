@@ -1,55 +1,68 @@
 // Funcionales
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
+import { Button } from 'react-native-elements'
 // Conexion
 import { connect } from "react-redux";
 import { getAllItineraries } from '../store/actions/itineraryActions';
+import { NavigationActions } from 'react-navigation';
 // Components
 import Itinerary from './Itinerary.js';
-/*import Loading from '../Loading';
-import NavBar from '../Nav/nav'; */
 
 class ListItinerary extends Component {
+
+  constructor() {
+    super();
+    this.redirect = this.redirect.bind(this)
+  }
   state = {
     listItinerary: []
   }
 
-   componentDidMount() {
-     let city = this.props.navigation.getParam('city');
-     let country = this.props.navigation.getParam('country');
-     this.props.setItinerary(`https://mytinerary-back.herokuapp.com/cities/${country}/${city}`)
-   } 
+  componentDidMount() {
+    let city = this.props.navigation.getParam('city');
+    let country = this.props.navigation.getParam('country');
+    this.props.setItinerary(`https://mytinerary-back.herokuapp.com/cities/${country}/${city}`)
+  }
 
-   componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.itineraryCity !== prevProps.itineraryCity) {
       this.setState({
         listItinerary: this.props.itineraryCity
       })
     }
-  } 
+  }
+
+  orderItinerary() {
+    return this.state.listItinerary.map((i) => {
+      return <Itinerary key={i._id} itinerary={i} />
+    })
+  }
+
+  redirect() {
+    this.props.navigation.dispatch(
+      NavigationActions.navigate({
+        routeName: 'init',
+        action: NavigationActions.navigate({
+          routeName: 'Cities',
+        })
+      })
+    )
+  }
 
   render() {
     return (
-      <View>
-        
-        <Text>Itinerary</Text>
-
-         {this.props.loading
-          ? (<View><Text>nothing</Text></View>)
-          :
-          <>
-            <View>
-
-              <Itinerary/>
-
+      <ScrollView style={{marginTop: 30}}>
+        {this.props.loading ? (<View><Text>nothing</Text></View>)
+          :<>
+            <View style={{width: '100%', alignItems: 'center'}}>
+              {this.orderItinerary()}
             </View>
             <View>
-              <Text>Choose another city</Text>
+              <Button type='clear' title='Choose another city' onPress={this.redirect} />
             </View>
-          </>
-        }
-
-      </View>
+          </>}
+      </ScrollView>
     )
   }
 }
@@ -67,4 +80,4 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
- export default connect(mapStateToProps, mapDispatchToProps)(ListItinerary);
+export default connect(mapStateToProps, mapDispatchToProps)(ListItinerary);

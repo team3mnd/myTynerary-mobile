@@ -25,7 +25,6 @@ class NavBar extends React.PureComponent {
     AsyncStorage.getItem("success").then((value) => {
       success = value
       if (success === "true") {
-        console.log('entroo')
         let imageUrl = tokenDecoded.picture;
         let userName = tokenDecoded.username;
         this.setState({ imageUrl });

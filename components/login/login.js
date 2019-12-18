@@ -4,10 +4,6 @@ import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
-import { StyleSheet } from 'react-native';
-
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
 
 class Login extends Component {
   state = {
@@ -69,15 +65,6 @@ class Login extends Component {
   }
 
   render() {
-    const responseGoogle = (response) => {
-      let user = {
-        email: response.profileObj.email,
-        password: 'google_pass_y_ya_fue',
-        useGoogle: true,
-        response: response
-      };
-      this.props.login(user)
-    }
     return (
       <View style={styles.mainContainer}>
         <>
@@ -104,7 +91,7 @@ class Login extends Component {
                 title='OK'
                 onPress={e => this.obtieneLogin(e)} />
             </View>
-            {this.renderRedirect()}
+            
           </View>
           <View style={styles.buttonRETContainer}>
             <Button title='return'
@@ -115,25 +102,6 @@ class Login extends Component {
     )
   }
 }
-const styles = StyleSheet.create({
-  containerGeneral: {
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
-      width: '90%',
-      borderStyle: 'solid',
-      borderColor: 'grey',
-      borderRadius: 5,
-      shadowColor: "#000",
-      shadowOffset: {
-          width: 0,
-          height: 2,
-      },
-      shadowOpacity: 0.23,
-      shadowRadius: 2.62,
-      elevation: 4,
-  }
-})
 
 const styles = StyleSheet.create({
   mainContainer: {

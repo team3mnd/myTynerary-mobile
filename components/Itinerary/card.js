@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
-import SlidePack from './SlidePack/SlidePack';
-import './card.css';
-import Comment from '../Comment/Comment'
-import Image from "react-bootstrap/Image";
-import "../Nav/NavbarMain.css";
+import { View, Text, Image, Button, StyleSheet, ScrollView } from "react-native";
+import Comment from '../Comment/Comment';
 
 export default class Card extends Component {
 
   getComment(comment) {
-
     this.props.comments.push(comment)
     this.setState({
       updated: !this.state.updated
     })
-
   }
 
   constructor() {
@@ -27,45 +22,59 @@ export default class Card extends Component {
 
   listComments(comment) {
     return comment.comments.map((comment, i) => {
-      return <div key={i} className="d-flex flex-row border border-secondary mb-1">
-        <div className='d-flex flex-column ml-2 pt-2' key={i}>
-          <div className="containerImageProfile">
-            <Image
-              key={i}
-              src={comment.photo}
-              style={{ width: "50px", height: "50px", borderRadius: "50%", padding: '3%' }}
-              alt="imageProfile"
-            />
-          </div>
-
-        </div>
-        <div className='d-flex flex-column ml-3'>
-          <p className='font-weight-bold mt-0'>{comment.user}</p>
-          <p className='mt-0'>{comment.comment}</p>
-        </div>
-      </div>
+      return (<View style={style.comment} key={i}>
+        <View key={i}>
+          <Image
+            key={i}
+            source={{ uri: comment.photo }}
+            style={{ width: 50, height: 50, borderRadius: 50, margin: 5 }} />
+        </View>
+        <View style={{ margin: 5 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{comment.user}</Text>
+          <Text>{comment.comment}</Text>
+        </View>
+      </View>)
     });
 
   }
 
   activities() {
     let { Activities } = this.props;
-    return Activities.map(i => i);
+    return Activities.map(i => {
+      console.log(`https://mytinerary-back.herokuapp.com${i.picture}`)
+      return <Image key={i.title} style={style.img} source={{uri:`https://mytinerary-back.herokuapp.com${i.picture}`}} /> });
   }
-
 
   sendComment(e) {
     console.log(e)
   }
   render() {
     return (
-      <div className='d-flex justify-content-center flex-column'>
-        <SlidePack className="img" setObj={this.activities()} />
-        <h5 style={{ marginTop: "15px" }}>Comments: </h5>
-        {this.listComments(this.props)}
-
-        <Comment _id={this.props._id} updateComment={this.getComment} />
-      </div>
+      <View style={{ height: 450 }}>
+        <ScrollView horizontal={true} style={{height:'40%'}}>
+          {this.activities()}
+        </ScrollView>
+        <Text style={{ margin: 10 }}>Comments: </Text>
+        <ScrollView style={{ height: '55%' }}>
+          {this.listComments(this.props)}
+          <Comment _id={this.props._id} updateComment={this.getComment} />
+        </ScrollView>
+      </View>
     )
   }
 }
+
+const style = StyleSheet.create({
+  img:{
+    width:150,
+    height:150,
+    margin: 5
+  },
+  comment: {
+    flexDirection: 'row',
+    margin: 3,
+    borderRadius: 10,
+    backgroundColor: '#CACACA',
+    opacity: 0.9
+  }
+})

@@ -12,7 +12,6 @@ const fetchDataItineraries = (itineraryCities) => {
 const getItinerariesList = async (pathname) => {
     let res = await fetch(pathname, { method: "GET" })
     let data = await res.json();
-    
     return data;
 }
 
