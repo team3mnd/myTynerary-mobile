@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { postFavourites, getAllFavourites } from '../store/actions/favouriteActions';
 import { connect } from "react-redux";
 import Card from "./card.js";
+import { CheckBox } from 'react-native-elements';
 import { View, Text, Image, Button, StyleSheet, AsyncStorage } from "react-native";
 
 // necesario para corazon
@@ -20,10 +21,10 @@ class Itinerary extends Component {
     // necesario para corazon
     const token = ''
     AsyncStorage.getItem("token")
-    .then((value) => {
-      token = jwtDecode(value);
-    })
-    .catch((err)=>{console.log(err)});
+      .then((value) => {
+        token = jwtDecode(value);
+      })
+      .catch((err) => { console.log(err) });
 
     const tokenDecoded = jwt.decode(token);
     this.setState({
@@ -89,8 +90,15 @@ class Itinerary extends Component {
               <Text>Price: {itinerary.price}</Text>
             </View>
           </View>
-          <View style={{ alignItems: 'flex-end'}}>
-            <Text>m</Text>
+          <View style={{ alignItems: 'flex-end' }}>
+            <CheckBox
+              checkedIcon='heart'
+              size={16}
+              uncheckedIcon='heart'
+              checkedColor='red'
+              checked={this.state.favourite}
+              onPress={() => this.setState({favourite: !this.state.favourite})}
+            />
           </View>
         </View>
         <View>
@@ -106,8 +114,8 @@ class Itinerary extends Component {
 
 const style = StyleSheet.create({
   img: {
-    width: 130,
-    height: 130,
+    width: 110,
+    height: 110,
     margin: 5,
     borderRadius: 10
   },
