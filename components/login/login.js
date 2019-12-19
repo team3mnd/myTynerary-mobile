@@ -4,10 +4,7 @@ import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
-import { StyleSheet } from 'react-native';
-
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faHome, faCity } from '@fortawesome/free-solid-svg-icons';
+import ButtonLogin from '../nav/buttonLogin.js';
 
 class Login extends Component {
   state = {
@@ -68,25 +65,17 @@ class Login extends Component {
     })
   }
 
-  render() {
-    const responseGoogle = (response) => {
-      let user = {
-        email: response.profileObj.email,
-        password: 'google_pass_y_ya_fue',
-        useGoogle: true,
-        response: response
-      };
-      this.props.login(user)
-    }
+  render(){
     return (
       <View style={styles.mainContainer}>
+         <ButtonLogin navigation={this.props.navigation}/>
         <>
           {(this.state.mostrarErrores && this.state.errors) ?
             <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
             : <View style={styles.errorContainer}></View>
           }
           <View style={styles.formContainer}>
-            <Text style={{ textAlign: 'center', fontSize: 30 }}>Login</Text>
+            <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '25%' }}>Login</Text>
             <TextInput
               keyboardType='email-address'
               placeholder="Enter email"
@@ -100,14 +89,13 @@ class Login extends Component {
               value={this.state.password}
               style={styles.textInputContainer} />
             <View style={styles.buttonOKContainer}>
-              <Button
-                title='OK'
+              <Button color='#003499'
+                title='OK' 
                 onPress={e => this.obtieneLogin(e)} />
             </View>
-            {this.renderRedirect()}
           </View>
           <View style={styles.buttonRETContainer}>
-            <Button title='return'
+            <Button color='#9bb7d4' title='return' 
               onPress={e => this.props.navigation.navigate('init')} />
           </View>
         </>
@@ -132,16 +120,13 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.23,
       shadowRadius: 2.62,
       elevation: 4,
-  }
-})
-
-const styles = StyleSheet.create({
+  },
   mainContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   errorContainer: {
     flex: 1,
@@ -155,7 +140,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: '50%'
+    marginTop: '10%'
   },
   textInputContainer: {
     width: 200,

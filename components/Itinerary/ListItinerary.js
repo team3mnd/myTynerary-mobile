@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { getAllItineraries } from '../store/actions/itineraryActions';
 // Components
 import Itinerary from './Itinerary.js';
+import ButtonLogin from '../nav/buttonLogin.js';
 /*import Loading from '../Loading';
 import NavBar from '../Nav/nav'; */
 
@@ -31,7 +32,7 @@ class ListItinerary extends Component {
   render() {
     return (
       <View>
-        
+        <ButtonLogin navigation={this.props.navigation}/>
         <Text>Itinerary</Text>
 
          {this.props.loading
