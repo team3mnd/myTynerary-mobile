@@ -65,7 +65,7 @@ class Login extends Component {
     })
   }
 
-  render(){
+  render() {
     return (
       <View style={styles.mainContainer}>
          <ButtonLogin navigation={this.props.navigation}/>
@@ -103,6 +103,7 @@ class Login extends Component {
     )
   }
 }
+
 const styles = StyleSheet.create({
   containerGeneral: {
       flex:1,
@@ -120,13 +121,6 @@ const styles = StyleSheet.create({
       shadowOpacity: 0.23,
       shadowRadius: 2.62,
       elevation: 4,
-  },
-  mainContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%'
   },
   errorContainer: {
     flex: 1,
