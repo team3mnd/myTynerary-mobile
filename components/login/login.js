@@ -4,6 +4,7 @@ import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
+import ButtonLogin from '../nav/buttonLogin.js';
 
 class Login extends Component {
   state = {
@@ -65,15 +66,25 @@ class Login extends Component {
   }
 
   render() {
+    const responseGoogle = (response) => {
+      let user = {
+        email: response.profileObj.email,
+        password: 'google_pass_y_ya_fue',
+        useGoogle: true,
+        response: response
+      };
+      this.props.login(user)
+    }
     return (
       <View style={styles.mainContainer}>
+        <ButtonLogin navigation={this.props.navigation}/>
         <>
           {(this.state.mostrarErrores && this.state.errors) ?
             <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
             : <View style={styles.errorContainer}></View>
           }
           <View style={styles.formContainer}>
-            <Text style={{ textAlign: 'center', fontSize: 30 }}>Login</Text>
+            <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '25%' }}>Login</Text>
             <TextInput
               keyboardType='email-address'
               placeholder="Enter email"
@@ -102,14 +113,31 @@ class Login extends Component {
     )
   }
 }
-
 const styles = StyleSheet.create({
+  containerGeneral: {
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      width: '90%',
+      borderStyle: 'solid',
+      borderColor: 'grey',
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4,
+  },
   mainContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
     height: '100%',
+    marginTop: '7%'
   },
   errorContainer: {
     flex: 1,
@@ -123,7 +151,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: '50%'
+    marginTop: '10%'
   },
   textInputContainer: {
     width: 200,

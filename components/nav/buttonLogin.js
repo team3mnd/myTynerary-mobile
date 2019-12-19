@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
 import Menu, { MenuItem } from 'react-native-material-menu';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { connect } from "react-redux";
-import { Image } from 'react-native'
 import { AsyncStorage } from 'react-native';
+import { Header } from 'react-native-elements';
 const jwtDecode = require('jwt-decode');
 let success = '';
 
@@ -48,7 +48,10 @@ class NavBar extends React.PureComponent {
 
   render() {
     return (
-      <View style={style.container}>
+       <Header containerStyle={{
+        backgroundColor: '#003499'
+      }}>
+         <View>
         {
           success === 'true'
             ?
@@ -60,32 +63,19 @@ class NavBar extends React.PureComponent {
               <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('Logout') }}>Log Out</MenuItem>
             </Menu> :
 
-            <Menu
+            <Menu 
               ref={this.setMenuRef}
-              button={<FontAwesomeIcon onPress={this.showMenu} icon={faUserCircle} size={32} color={'black'} />}
+              button={<FontAwesomeIcon onPress={this.showMenu} icon={faUserCircle} size={32} color={'white'} />}
             >
-              <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('login') }}>Login</MenuItem>
-              <MenuItem onPress={() => { this.hideMenu(); this.props.navigation.navigate('signup') }}>Create Account</MenuItem>
+              <MenuItem  onPress={() => { this.hideMenu(); this.props.navigation.navigate('login') }}>Login</MenuItem>
+              <MenuItem  onPress={() => { this.hideMenu(); this.props.navigation.navigate('signup') }}>Create Account</MenuItem>
             </Menu>
         }
       </View>
+      </Header>
     );
   }
 }
-const style = StyleSheet.create({
-  container: {
-    alignItems: 'flex-start',
-    justifyContent: 'flex-start',
-    width: '100%',
-    marginTop: 9,
-    paddingLeft: 9
-  },
-  containerImageProfile: {
-    position: 'relative',
-    textAlign: 'center'
-  }
-
-})
 
 const mapStateToProps = (state) => {
   return ({

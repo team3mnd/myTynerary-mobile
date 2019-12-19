@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TextInput, ScrollView, ImageBackground, TouchableHighlight } from 'react-native';
 import { connect } from "react-redux";
+import ButtonLogin from '../nav/buttonLogin.js';
 import { getAllCities } from "../store/actions/citiesActions";
 
 class Cities extends Component {
@@ -40,6 +41,7 @@ class Cities extends Component {
     let { filteredCities } = this.state
     return (
       <View style={styles.appContainer}>
+        <ButtonLogin navigation={this.props.navigation}/> 
         <ScrollView>
           <View style={styles.filterContainer}>
             <Text style={{ color: 'black' }}
@@ -89,8 +91,8 @@ class Cities extends Component {
                       >
                         <View>
                           <Text
-                            style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.name}</Text>
-                          <Text style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.country}</Text>
+                            style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 5 }}> {city.name}</Text>
+                          <Text style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 5 }}> {city.country}</Text>
                         </View>
                       </ImageBackground>
                     </TouchableHighlight>
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+    width: '90%',
     height: 200,
     backgroundColor: 'blue',
     marginBottom: 20,
