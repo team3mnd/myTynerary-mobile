@@ -10,7 +10,7 @@ const jwtDecode = require('jwt-decode');
 // fin corazon
 
 class Itinerary extends Component {
-  constructor(){
+  constructor() {
     super();
     this.onClickFunc = this.onClickFunc.bind(this);
   }
@@ -25,7 +25,7 @@ class Itinerary extends Component {
     // necesario para corazon
     AsyncStorage.getItem("token")
       .then((value) => {
-        if (value !== null){
+        if (value !== null) {
           let token = jwtDecode(value);
           let userId = token.id
           this.setState({ userId })
@@ -74,45 +74,47 @@ class Itinerary extends Component {
     const { expand, hashtags, userId } = this.state;
     const { itinerary } = this.props;
     return (
-      <View key={itinerary._id} style={style.card} >
-        <View style={style.itineraryTittle}>
-          <View>
-            <Image style={style.img} source={{ uri: `https://mytinerary-back.herokuapp.com${itinerary.pictureId}` }} />
-            <Text style={{ fontSize: 18, margin: 5, textAlign: 'center' }}>{itinerary.author}</Text>
-          </View>
-          <View style={style.itineraryContent}>
-            <View>
-              <Text style={style.nameItinerary}>{itinerary.title}</Text>
-            </View>
-            <View>
-              <Text>Likes: {itinerary.rating}</Text>
-              <Text>Duration: {itinerary.duration}</Text>
-              <Text>Price: {itinerary.price}</Text>
-            </View>
-          </View>
-          <View style={{ alignItems: 'flex-end' }}>
-            {userId ?
-              <CheckBox
-                checkedIcon='heart'
-                size={16}
-                uncheckedIcon='heart'
-                checkedColor='red'
-                checked={this.state.favourite}
-                onPress={this.onClickFunc}
-              /> :
-              <CheckBox
-                checkedIcon='heart'
-                size={16}
-                uncheckedIcon='heart'
-                checkedColor='red'
-                checked={this.state.favourite}
-              />}
-          </View>
-        </View>
+      <View View key={itinerary._id} style={style.card} >
         <View>
+          <View style={style.itineraryTittle}>
+            <View style={style.itineraryImage} >
+              <Image style={style.img} source={{ uri: `https://mytinerary-back.herokuapp.com${itinerary.pictureId}` }} />
+              <Text style={{ fontSize: 18, margin: 5, textAlign: 'center' }}>{itinerary.author}</Text>
+            </View>
+            <View style={style.itineraryContent}>
+              <View>
+                <Text style={style.nameItinerary}>{itinerary.title}</Text>
+              </View>
+              <View>
+                <Text>Likes: {itinerary.rating}</Text>
+                <Text>Duration: {itinerary.duration}</Text>
+                <Text>Price: {itinerary.price}</Text>
+              </View>
+            </View>
+            <View style={{ alignItems: 'flex-end' }}>
+              {userId ?
+                <CheckBox
+                  checkedIcon='heart'
+                  size={16}
+                  uncheckedIcon='heart'
+                  checkedColor='red'
+                  checked={this.state.favourite}
+                  onPress={this.onClickFunc}
+                /> :
+                <CheckBox
+                  checkedIcon='heart'
+                  size={16}
+                  uncheckedIcon='heart'
+                  checkedColor='red'
+                  checked={this.state.favourite}
+                />}
+            </View>
+          </View>
           <View>
-            {expand && <Card Activities={itinerary.activities} comments={itinerary.comments} _id={itinerary._id} />}
-            <Button onPress={() => this.setState({ expand: !this.state.expand })} title='View Activities' />
+            <View>
+              {expand && <Card Activities={itinerary.activities} comments={itinerary.comments} _id={itinerary._id} />}
+              <Button onPress={() => this.setState({ expand: !this.state.expand })} title='View Activities' />
+            </View>
           </View>
         </View>
       </View>
@@ -122,18 +124,25 @@ class Itinerary extends Component {
 
 const style = StyleSheet.create({
   img: {
-    width: 110,
     height: 110,
     margin: 5,
     borderRadius: 10
   },
   itineraryTittle: {
     flexDirection: 'row',
-
+    width: '100%'
+  },
+  itineraryImage: {
+    width: '40%'
   },
   itineraryContent: {
-    margin: 10,
-    width: '50%'
+    marginBottom: 7,
+    marginTop: 7,
+    marginLeft: 7,
+    width: '45%'
+  },
+  favouriteCheck: {
+    width: '5%'
   },
   card: {
     width: '95%',
@@ -145,12 +154,15 @@ const style = StyleSheet.create({
     borderRadius: 10,
     padding: 5,
     margin: 5,
-    shadowRadius: 5
+    shadowRadius: 5,
+    backgroundColor: '#d2f8fb'
   },
   nameItinerary: {
     fontSize: 20
   }
 })
+
+
 
 const mapStateToProps = state => {
   return {

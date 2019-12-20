@@ -33,6 +33,7 @@ const sendFetch = async (user) => {
   })
 
   let data = await res.json();
+  console.log("data", data)
   return data;
 }
 
@@ -53,6 +54,7 @@ export const getAccess = (user) => {
       return dispatch(dataFetched);
     } catch (err) {
       //dispatch(isFetching(false));
+      console.error("err", err)
     }
   }
 }

@@ -8,6 +8,7 @@ import { getAllItineraries } from '../store/actions/itineraryActions';
 import { NavigationActions } from 'react-navigation';
 // Components
 import Itinerary from './Itinerary.js';
+import ButtonLogin from '../nav/buttonLogin.js';
 
 class ListItinerary extends Component {
 
@@ -52,8 +53,9 @@ class ListItinerary extends Component {
 
   render() {
     return (
-      <ScrollView style={{marginTop: 30}}>
-        {this.props.loading ? (<View><Text>nothing</Text></View>)
+      <ScrollView>
+        <ButtonLogin navigation={this.props.navigation} />
+        {this.props.loading ? (<View><Text style={{textAlign: 'center'}}>Nothing</Text></View>)
           :<>
             <View style={{width: '100%', alignItems: 'center'}}>
               {this.orderItinerary()}

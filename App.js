@@ -52,11 +52,12 @@ const TabNavigator = createBottomTabNavigator({
 	tabBarOptions: {
 		//showLabel: false,
 		labelStyle: {
-			fontSize: 16,
+			fontSize: 14,
 		},// hide labels
-		activeTintColor: '#F8F8F8', // active icon color
+		activeTintColor: '#F8F8F1', // active icon color
 		inactiveTintColor: '#586589',  // inactive icon color
 		style: {
+			paddingTop: 5,
 			backgroundColor: '#171F33' // TabBar background
 		}
 	}

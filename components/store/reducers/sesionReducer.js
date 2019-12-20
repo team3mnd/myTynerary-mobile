@@ -21,7 +21,8 @@ export default (state = initialState, action) => {
         errors: action.payload.errors
       }
     case SESSION_OFF:
-      AsyncStorage.clear()
+      AsyncStorage.setItem('success', '')
+      AsyncStorage.setItem('token', '')
       console.log('token borrado')
       return {
         ...state,

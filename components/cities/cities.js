@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, Image, TextInput, ScrollView, ImageBackground, TouchableHighlight } from 'react-native';
 import { connect } from "react-redux";
+import ButtonLogin from '../nav/buttonLogin.js';
 import { getAllCities } from "../store/actions/citiesActions";
 
 class Cities extends Component {
@@ -40,7 +41,8 @@ class Cities extends Component {
     let { filteredCities } = this.state
     return (
       <View style={styles.appContainer}>
-        <ScrollView>
+        <ButtonLogin navigation={this.props.navigation} />
+        <ScrollView style={{ width: '90%' }} showsVerticalScrollIndicator={false}>
           <View style={styles.filterContainer}>
             <Text style={{ color: 'black' }}
             >Filter by City name:</Text>
@@ -65,9 +67,9 @@ class Cities extends Component {
           {/* <ScrollView contentContainerStyle={styles.svContainer}> */}
 
           {this.props.loading
-            ? (<View><Text>loading...</Text></View>)
+            ? (<View><Text style={{ textAlign: 'center' }}>Loading...</Text></View>)
             : filteredCities.length === 0
-              ? (<View><Text>City not found</Text></View>)
+              ? (<View><Text style={{ textAlign: 'center' }}>City not found</Text></View>)
               : filteredCities.sort((a, b) => {
                 if (a.name > b.name) {
                   return 1;
@@ -80,7 +82,7 @@ class Cities extends Component {
                 return (
                   <View style={styles.appCities} key={city._id}>
                     <TouchableHighlight
-                      onPress={() => { this.props.navigation.navigate('listItinerary', { city : city.name, country : city.country}) }}>
+                      onPress={() => { this.props.navigation.navigate('listItinerary', { city: city.name, country: city.country }) }}>
                       <ImageBackground
                         source={{ uri: city.url }}
                         style={{
@@ -89,14 +91,14 @@ class Cities extends Component {
                       >
                         <View>
                           <Text
-                            style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.name}</Text>
-                          <Text style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 3 }}> {city.country}</Text>
+                            style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 5 }}> {city.name}</Text>
+                          <Text style={{ fontWeight: 'bold', textShadowColor: 'white', textAlign: 'center', textShadowRadius: 5 }}> {city.country}</Text>
                         </View>
                       </ImageBackground>
                     </TouchableHighlight>
                   </View>
                 );
-              })} 
+              })}
         </ScrollView>
       </View>
     )
@@ -112,9 +114,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   filterContainer: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 45,
     marginBottom: 20,
   },

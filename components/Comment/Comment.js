@@ -21,7 +21,9 @@ class Comment extends Component {
     let token = '';
     AsyncStorage.getItem("token")
       .then((value) => {
-        token = jwtDecode(value);
+        if (value!== null){
+          token = jwtDecode(value);
+        }
       })
       .catch((err)=>{console.log(err)});
     this.setState({ token });
@@ -38,12 +40,12 @@ class Comment extends Component {
     }); 
   }
 
-/*   componentDidUpdate(prevProps){
+/*    componentDidUpdate(prevProps){
     if (this.props.comments !== prevProps.comments){
       console.log(this.props.comments);
     }
-  } */
-
+  } 
+ */
   setValueMessage(string) {
     this.setState({ message: string })
   }
@@ -66,11 +68,9 @@ class Comment extends Component {
   }
 
   render() {
-    console.log(this.state.success)
     return (
       <View>
-        {
-          this.state.success=== 'true'
+        {this.state.success=== 'true'
             ?
             <View>
               <View>
@@ -82,8 +82,8 @@ class Comment extends Component {
               <View>
                 <TextInput placeholder="Your comment..." value={this.state.message}
                   onChangeText={e => this.setValueMessage(e)} />
-                <View>
-                  <Button
+                <View style={{ paddingTop: '1%', paddingBottom: '3%' }}>
+                  <Button color = '#003499'
                     title='send'
                     onPress={this.getComment}>
                   </Button>

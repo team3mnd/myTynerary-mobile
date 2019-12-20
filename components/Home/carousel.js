@@ -1,7 +1,7 @@
 import React from 'react'
 import Carousel from 'react-native-snap-carousel';
 import { StyleSheet, Text, View, ImageBackground } from 'react-native';
-
+ 
 export default class Slider extends React.Component {
   state = {
     carouselItems: [
@@ -21,7 +21,7 @@ export default class Slider extends React.Component {
         city: 'Buenos Aires',
         pic: 'https://www.sinmapa.net/wp-content/uploads/2019/02/Buenos-Aires-unsplash-1024x683.jpg'
       }],
-
+ 
       [{
         city: 'Madrid',
         pic: 'https://www.parisvatry.com/wp-content/uploads/2018/12/madrid-light.jpeg'
@@ -38,7 +38,7 @@ export default class Slider extends React.Component {
         city: 'Los Angeles',
         pic: 'https://upload.wikimedia.org/wikipedia/commons/3/30/Echo_Park_Lake_with_Downtown_Los_Angeles_Skyline.jpg'
       }],
-
+ 
       [{
         city: 'Tokyo',
         pic: 'https://static.businessinsider.sg/2019/07/07/5d26280921a86107bb51bd92.png'
@@ -57,7 +57,7 @@ export default class Slider extends React.Component {
       }]
     ]
   }
-
+ 
   renderItem = ({ index }) => {
     let cities = this.state.carouselItems[index]
     return (
@@ -67,22 +67,19 @@ export default class Slider extends React.Component {
       }}>
         {cities.map(city => {
           return (
-            <View key={city.city} style={{width: '45%', height: '45%', margin:5 }}>
+            <View key={city.city} style={{width: '40%', height: '45%', margin:5 }}>
             <ImageBackground
               source={{ uri: city.pic }}
               resizeMode='cover' 
               style={{ width: '100%', height: '100%'}}>
               <View>
-                <Text style={{fontWeight:'bold', textShadowColor:'black', color: 'white', textAlign:'center', textShadowRadius:3}}>{city.city}</Text>
+                <Text style={{fontWeight:'bold', textShadowColor:'black', color: 'white', textAlign:'center', textShadowRadius:5}}>{city.city}</Text>
               </View>
             </ImageBackground>
             </View>
-
-
-
           )
         })}
-
+ 
       </View>
     )
   }
