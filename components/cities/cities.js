@@ -42,7 +42,7 @@ class Cities extends Component {
     return (
       <View style={styles.appContainer}>
         <ButtonLogin navigation={this.props.navigation}/> 
-        <ScrollView>
+        <ScrollView style={{width: '90%'}} showsVerticalScrollIndicator={false}>
           <View style={styles.filterContainer}>
             <Text style={{ color: 'black' }}
             >Filter by City name:</Text>
@@ -67,9 +67,9 @@ class Cities extends Component {
           {/* <ScrollView contentContainerStyle={styles.svContainer}> */}
 
           {this.props.loading
-            ? (<View><Text>loading...</Text></View>)
+            ? (<View><Text style={{textAlign: 'center'}}>Loading...</Text></View>)
             : filteredCities.length === 0
-              ? (<View><Text>City not found</Text></View>)
+              ? (<View><Text style={{textAlign: 'center'}}>City not found</Text></View>)
               : filteredCities.sort((a, b) => {
                 if (a.name > b.name) {
                   return 1;
@@ -114,9 +114,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   filterContainer: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 45,
     marginBottom: 20,
   },
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '90%',
+    width: '100%',
     height: 200,
     backgroundColor: 'blue',
     marginBottom: 20,

@@ -57,6 +57,7 @@ const TabNavigator = createBottomTabNavigator({
 		activeTintColor: '#F8F8F8', // active icon color
 		inactiveTintColor: '#586589',  // inactive icon color
 		style: {
+			paddingTop: 5,
 			backgroundColor: '#171F33' // TabBar background
 		}
 	}

@@ -82,8 +82,8 @@ class Comment extends Component {
               <View>
                 <TextInput placeholder="Your comment..." value={this.state.message}
                   onChangeText={e => this.setValueMessage(e)} />
-                <View>
-                  <Button
+                <View style={{ paddingTop: '1%', paddingBottom: '3%' }}>
+                  <Button color='#003499'
                     title='send'
                     onPress={this.getComment}>
                   </Button>

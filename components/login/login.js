@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, StyleSheet } from 'react-native';
-import ModalError from '../modalError/modalError'
-import { Button } from 'react-native-elements';
+import { Text, View, TextInput, StyleSheet, Button } from 'react-native';
+import ModalError from '../modalError/modalError';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
 import ButtonLogin from '../nav/buttonLogin.js';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class Login extends Component {
   state = {
@@ -40,8 +40,8 @@ class Login extends Component {
       password: this.state.password,
       useGoogle: false
     };
-     this.props.login(user)
-    if(! this.props.errors){
+    this.props.login(user)
+    if (!this.props.errors) {
       this.redirect()
     }
     if (this.props.errors) {
@@ -76,85 +76,61 @@ class Login extends Component {
       this.props.login(user)
     }
     return (
-      <View style={styles.mainContainer}>
-        <ButtonLogin navigation={this.props.navigation}/>
-        <>
-          {(this.state.mostrarErrores && this.state.errors) ?
-            <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
-            : <View style={styles.errorContainer}></View>
-          }
-          <View style={styles.formContainer}>
-            <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '25%' }}>Login</Text>
-            <TextInput
-              keyboardType='email-address'
-              placeholder="Enter email"
-              onChangeText={this.valueUser}
-              value={this.state.user}
-              style={styles.textInputContainer} />
-            <TextInput
-              secureTextEntry={true}
-              placeholder="Enter password"
-              onChangeText={this.valuePassword}
-              value={this.state.password}
-              style={styles.textInputContainer} />
-            <View style={styles.buttonOKContainer}>
-              <Button
-                title='OK'
-                onPress={e => this.obtieneLogin(e)} />
+        <View style={styles.mainContainer}>
+          <ButtonLogin navigation={this.props.navigation} />
+          <View style={{ width: '100%', height: '90%', alignItems: 'center'}}>
+            {(this.state.mostrarErrores && this.state.errors) ?
+              <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
+              : <View style={styles.errorContainer}></View>
+            }
+            <View style={styles.formContainer}>
+              <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '25%' }}>Login</Text>
+              <TextInput
+                keyboardType='email-address'
+                placeholder="Enter email"
+                onChangeText={this.valueUser}
+                value={this.state.user}
+                style={styles.textInputContainer} />
+              <TextInput
+                secureTextEntry={true}
+                placeholder="Enter password"
+                onChangeText={this.valuePassword}
+                value={this.state.password}
+                style={styles.textInputContainer} />
+              <View style={styles.buttonOKContainer}>
+                <Button color='#003499' title='Ok' onPress={e => this.obtieneLogin(e)} />
+              </View>
+              <View style={styles.buttonRETContainer}>
+                <Button color='#9bb7d4' title='return' onPress={e => this.props.navigation.navigate('init')} />
+              </View>
             </View>
-            
+
           </View>
-          <View style={styles.buttonRETContainer}>
-            <Button title='return'
-              onPress={e => this.props.navigation.navigate('init')} />
-          </View>
-        </>
-      </View>
+        </View>
     )
   }
 }
 const styles = StyleSheet.create({
-  containerGeneral: {
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
-      width: '90%',
-      borderStyle: 'solid',
-      borderColor: 'grey',
-      borderRadius: 5,
-      shadowColor: "#000",
-      shadowOffset: {
-          width: 0,
-          height: 2,
-      },
-      shadowOpacity: 0.23,
-      shadowRadius: 2.62,
-      elevation: 4,
-  },
   mainContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
-    height: '100%',
-    marginTop: '7%'
+    height: '100%'
   },
   errorContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginTop: 20,
+    width: '60%',
+    marginTop: 10,
+    backgroundColor: 'blue'
   },
   formContainer: {
     flex: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     width: '100%',
-    marginTop: '10%'
+    marginTop: '5%'
   },
   textInputContainer: {
-    width: 200,
+    width: '70%',
     height: 40,
     color: 'black',
     borderColor: 'black',
@@ -164,19 +140,17 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   buttonOKContainer: {
+    width: '70%',
     flex: 1,
-    width: 200,
     height: 40,
     marginVertical: 5,
+    zIndex: 1
   },
   buttonRETContainer: {
-    flex: 1,
     width: '100%',
-    height: 40,
-    marginVertical: 0,
-    position: 'absolute',
-    bottom: 0
-  },
+    bottom: 0,
+    zIndex: 1
+  }
 });
 
 const mapStateToProps = (state) => {

@@ -51,11 +51,11 @@ export default class Card extends Component {
   render() {
     return (
       <View style={{ height: 450 }}>
-        <ScrollView horizontal={true} style={{height:'40%'}}>
+        <ScrollView horizontal={true} style={{height:'40%'}} nestedScrollEnabled = {true}>
           {this.activities()}
         </ScrollView>
         <Text style={{ margin: 10 }}>Comments: </Text>
-        <ScrollView style={{ height: '55%' }}>
+        <ScrollView style={{ height: '55%' }} nestedScrollEnabled = {true}>
           {this.listComments(this.props)}
           <Comment _id={this.props._id} updateComment={this.getComment} />
         </ScrollView>

@@ -15,7 +15,7 @@ export default class Home extends React.Component {
       <View style={styles.container}>
         <ButtonLogin navigation={this.props.navigation}/>
         <ImageLogo />
-        <Slider />
+        <Slider/>
       </View>
     )
   }

@@ -109,7 +109,7 @@ export default class SignUp extends Component {
         })
         .catch(error => console.log("catch", error))
     }
-  }
+  } co
 
   render() {
     return (
@@ -119,7 +119,7 @@ export default class SignUp extends Component {
         <ButtonLogin navigation={this.props.navigation} />
         <View style={styles.mainContainer}>
           <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '5%' }}>Create Acount</Text>
-          <View>
+          <View style={{ width: '50%', paddingBottom: '2%' }}>
             <Image
               source={{ uri: this.state.imageProfile }}
               style={styles.profileImage} />
@@ -141,6 +141,8 @@ export default class SignUp extends Component {
                 <Button onPress={() => this.changeImage()} title='Add Photo'></Button>
               </>)
             }
+          </View>
+          <View style={{ width: '70%' }}>
             <Text style={styles.texts}>Username:</Text>
             <TextInput
               style={styles.inputs}
@@ -188,11 +190,13 @@ export default class SignUp extends Component {
               checked={this.state.checkTC}
               onPress={() => { this.setState({ checkTC: !this.state.checkTC }) }}
             />
-            <Button color='#003499' style={styles.buttons} title='Submit' onPress={() => { this.obtenerDatos() }} />
-            <Button color='#9bb7d4' style={styles.buttons} title='return' onPress={e => this.props.navigation.navigate('init')} />
 
-            <View style={styles.buttonOKContainer} />
-
+            <View style={styles.buttonOKContainer} >
+              <Button color='#003499' title='Submit' onPress={() => { this.obtenerDatos() }} />
+            </View>
+          </View>
+          <View style={styles.buttonRETContainer}>
+            <Button color='#9bb7d4' title='return' onPress={e => this.props.navigation.navigate('init')} />
           </View>
         </View>
       </ScrollView>
@@ -222,8 +226,8 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   buttonOKContainer: {
+    width: '100%',
     flex: 1,
-    width: 200,
     height: 40,
     marginVertical: 5,
   },
@@ -239,8 +243,8 @@ const styles = StyleSheet.create({
   texts: {
     color: 'grey'
   },
-  buttons: {
-    marginBottom: '3%',
-    paddingBottom: '3%'
-  }
+   buttonRETContainer: {
+    width: '100%',
+    bottom: 0
+  } 
 });
