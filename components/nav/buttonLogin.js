@@ -19,12 +19,13 @@ class NavBar extends React.PureComponent {
   componentDidMount() {
     let tokenDecoded = ''
     AsyncStorage.getItem("token").then((value) => {
-      tokenDecoded = jwtDecode(value);
-      console.log(tokenDecoded);
+      if (value !== null){
+        tokenDecoded = jwtDecode(value);
+        console.log(tokenDecoded);
+      }
     });
     AsyncStorage.getItem("success").then((value) => {
-      success = value
-      if (success === "true") {
+      if (value === "true") {
         let imageUrl = tokenDecoded.picture;
         let userName = tokenDecoded.username;
         this.setState({ imageUrl });

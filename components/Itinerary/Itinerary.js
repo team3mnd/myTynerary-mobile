@@ -10,6 +10,10 @@ const jwtDecode = require('jwt-decode');
 // fin corazon
 
 class Itinerary extends Component {
+  constructor(){
+    super();
+    this.onClickFunc = this.onClickFunc.bind(this);
+  }
   state = {
     itinerary: [],
     hashtags: [],
@@ -17,25 +21,22 @@ class Itinerary extends Component {
     userId: "",
     favourite: false
   };
-  async componentDidMount() {
+  componentDidMount() {
     // necesario para corazon
-    const token = ''
     AsyncStorage.getItem("token")
       .then((value) => {
-        token = jwtDecode(value);
+        if (value !== null){
+          let token = jwtDecode(value);
+          let userId = token.id
+          this.setState({ userId })
+          this.props.getFavourites(this.state.userId);
+        }
       })
       .catch((err) => { console.log(err) });
-
-    const tokenDecoded = jwt.decode(token);
     this.setState({
       itinerary: this.props.itinerary,
       hashtags: this.props.itinerary.hashtags
     });
-    if (tokenDecoded) {
-      const userId = tokenDecoded.id
-      await this.setState({ userId })
-      this.props.getFavourites(this.state.userId);
-    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -72,7 +73,6 @@ class Itinerary extends Component {
   render() {
     const { expand, hashtags, userId } = this.state;
     const { itinerary } = this.props;
-
     return (
       <View key={itinerary._id} style={style.card} >
         <View style={style.itineraryTittle}>
@@ -91,14 +91,22 @@ class Itinerary extends Component {
             </View>
           </View>
           <View style={{ alignItems: 'flex-end' }}>
-            <CheckBox
-              checkedIcon='heart'
-              size={16}
-              uncheckedIcon='heart'
-              checkedColor='red'
-              checked={this.state.favourite}
-              onPress={() => this.setState({favourite: !this.state.favourite})}
-            />
+            {userId ?
+              <CheckBox
+                checkedIcon='heart'
+                size={16}
+                uncheckedIcon='heart'
+                checkedColor='red'
+                checked={this.state.favourite}
+                onPress={this.onClickFunc}
+              /> :
+              <CheckBox
+                checkedIcon='heart'
+                size={16}
+                uncheckedIcon='heart'
+                checkedColor='red'
+                checked={this.state.favourite}
+              />}
           </View>
         </View>
         <View>
@@ -146,7 +154,7 @@ const style = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    //favourites: state.favouriteReducer.favourites
+    favourites: state.favouriteReducer.favourites
   };
 };
 

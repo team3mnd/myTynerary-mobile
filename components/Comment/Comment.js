@@ -38,11 +38,11 @@ class Comment extends Component {
     }); 
   }
 
-  componentDidUpdate(prevProps){
+/*   componentDidUpdate(prevProps){
     if (this.props.comments !== prevProps.comments){
       console.log(this.props.comments);
     }
-  }
+  } */
 
   setValueMessage(string) {
     this.setState({ message: string })

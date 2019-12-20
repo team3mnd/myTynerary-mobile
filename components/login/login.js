@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
 import ButtonLogin from '../nav/buttonLogin.js';
+import * as Google from 'expo-google-app-auth';
+
 
 class Login extends Component {
   state = {
@@ -40,8 +42,8 @@ class Login extends Component {
       password: this.state.password,
       useGoogle: false
     };
-     this.props.login(user)
-    if(! this.props.errors){
+    this.props.login(user)
+    if (!this.props.errors) {
       this.redirect()
     }
     if (this.props.errors) {
@@ -63,6 +65,15 @@ class Login extends Component {
     this.setState({
       mostrarErrores: false
     })
+  }
+
+  async SignIn() {
+    const result = await Google.logInAsync({
+      androidClientId: '748277599795-j3v5pk26p9soo2v87otpme8gphq385hb.apps.googleusercontent.com',
+      scopes: ['profile', 'email']
+    });
+
+    console.log(result)
   }
 
   render() {
@@ -89,9 +100,13 @@ class Login extends Component {
               value={this.state.password}
               style={styles.textInputContainer} />
             <View style={styles.buttonOKContainer}>
-              <Button color='#003499'
-                title='OK' 
-                onPress={e => this.obtieneLogin(e)} />
+
+              <Button
+                title='OK'
+                onPress={this.obtieneLogin} />
+              <Button
+                title='google'
+                onPress={this.SignIn} />
             </View>
           </View>
           <View style={styles.buttonRETContainer}>
