@@ -67,19 +67,16 @@ export default class Slider extends React.Component {
       }}>
         {cities.map(city => {
           return (
-            <View key={city.city} style={{width: '45%', height: '45%', margin:5 }}>
+            <View key={city.city} style={{width: '40%', height: '45%', margin:5 }}>
             <ImageBackground
               source={{ uri: city.pic }}
               resizeMode='cover' 
               style={{ width: '100%', height: '100%'}}>
               <View>
-                <Text style={{fontWeight:'bold', textShadowColor:'black', color: 'white', textAlign:'center', textShadowRadius:3}}>{city.city}</Text>
+                <Text style={{fontWeight:'bold', textShadowColor:'black', color: 'white', textAlign:'center', textShadowRadius:5}}>{city.city}</Text>
               </View>
             </ImageBackground>
             </View>
-
-
-
           )
         })}
 

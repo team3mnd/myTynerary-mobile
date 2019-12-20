@@ -4,7 +4,9 @@ import ModalError from '../modalError/modalError'
 import { Button } from 'react-native-elements';
 import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
+import ButtonLogin from '../nav/buttonLogin.js';
 import * as Google from 'expo-google-app-auth';
+
 
 class Login extends Component {
   state = {
@@ -77,13 +79,14 @@ class Login extends Component {
   render() {
     return (
       <View style={styles.mainContainer}>
+         <ButtonLogin navigation={this.props.navigation}/>
         <>
           {(this.state.mostrarErrores && this.state.errors) ?
             <ModalError style={styles.errorContainer} errors={this.props.errors} mostrar={() => this.mostrarErrores()} />
             : <View style={styles.errorContainer}></View>
           }
           <View style={styles.formContainer}>
-            <Text style={{ textAlign: 'center', fontSize: 30 }}>Login</Text>
+            <Text style={{ textAlign: 'center', fontSize: 30, paddingBottom: '25%' }}>Login</Text>
             <TextInput
               keyboardType='email-address'
               placeholder="Enter email"
@@ -97,6 +100,7 @@ class Login extends Component {
               value={this.state.password}
               style={styles.textInputContainer} />
             <View style={styles.buttonOKContainer}>
+
               <Button
                 title='OK'
                 onPress={this.obtieneLogin} />
@@ -104,10 +108,9 @@ class Login extends Component {
                 title='google'
                 onPress={this.SignIn} />
             </View>
-
           </View>
           <View style={styles.buttonRETContainer}>
-            <Button title='return'
+            <Button color='#9bb7d4' title='return' 
               onPress={e => this.props.navigation.navigate('init')} />
           </View>
         </>
@@ -117,12 +120,22 @@ class Login extends Component {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
+  containerGeneral: {
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center',
+      width: '90%',
+      borderStyle: 'solid',
+      borderColor: 'grey',
+      borderRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+          width: 0,
+          height: 2,
+      },
+      shadowOpacity: 0.23,
+      shadowRadius: 2.62,
+      elevation: 4,
   },
   errorContainer: {
     flex: 1,
@@ -136,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    marginTop: '50%'
+    marginTop: '10%'
   },
   textInputContainer: {
     width: 200,

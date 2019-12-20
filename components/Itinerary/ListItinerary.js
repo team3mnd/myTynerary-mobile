@@ -31,7 +31,6 @@ class ListItinerary extends Component {
         listItinerary: this.props.itineraryCity
       })
     }
-  }
 
   orderItinerary() {
     return this.state.listItinerary.map((i) => {
