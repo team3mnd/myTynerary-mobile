@@ -190,7 +190,6 @@ export default class SignUp extends Component {
               checked={this.state.checkTC}
               onPress={() => { this.setState({ checkTC: !this.state.checkTC }) }}
             />
-
             <View style={styles.buttonOKContainer} >
               <Button color='#003499' title='Submit' onPress={() => { this.obtenerDatos() }} />
             </View>
@@ -246,5 +245,9 @@ const styles = StyleSheet.create({
    buttonRETContainer: {
     width: '100%',
     bottom: 0
-  } 
+  },
+  buttons: {
+    marginBottom: '3%',
+    paddingBottom: '3%'
+  }
 });

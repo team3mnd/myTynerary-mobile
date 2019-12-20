@@ -7,6 +7,7 @@ import ButtonLogin from '../nav/buttonLogin.js';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as Google from 'expo-google-app-auth';
 
+
 class Login extends Component {
   state = {
     user: "",
@@ -86,6 +87,7 @@ class Login extends Component {
       this.props.login(user)
     }
     return (
+
         <View style={styles.mainContainer}>
           <ButtonLogin navigation={this.props.navigation} />
           <View style={{ width: '100%', height: '90%', alignItems: 'center'}}>
@@ -118,6 +120,7 @@ class Login extends Component {
               </View>
             </View>
         </View>
+
     )
   }
 }
