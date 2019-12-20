@@ -5,6 +5,7 @@ import { getAccess, clearErrors } from '../store/actions/sesionActions.js';
 import { connect } from "react-redux";
 import ButtonLogin from '../nav/buttonLogin.js';
 import { ScrollView } from 'react-native-gesture-handler';
+import * as Google from 'expo-google-app-auth';
 
 class Login extends Component {
   state = {
@@ -65,6 +66,15 @@ class Login extends Component {
     })
   }
 
+  async SignIn() {
+    const result = await Google.logInAsync({
+      androidClientId: '748277599795-j3v5pk26p9soo2v87otpme8gphq385hb.apps.googleusercontent.com',
+      scopes: ['profile', 'email']
+    });
+
+    console.log(result)
+  }
+
   render() {
     const responseGoogle = (response) => {
       let user = {
@@ -100,12 +110,13 @@ class Login extends Component {
               <View style={styles.buttonOKContainer}>
                 <Button color='#003499' title='Ok' onPress={e => this.obtieneLogin(e)} />
               </View>
+              <Button
+                title='google'
+                onPress={this.SignIn} />
               <View style={styles.buttonRETContainer}>
                 <Button color='#9bb7d4' title='return' onPress={e => this.props.navigation.navigate('init')} />
               </View>
             </View>
-
-          </View>
         </View>
     )
   }

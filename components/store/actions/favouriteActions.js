@@ -16,7 +16,7 @@ const fetchDataFavourites = (favourites) => {
 }
 
 const getFavouritesList = async (userId) => {
-  let pathname = '/users/favourite/' + userId;
+  let pathname = 'https://mytinerary-back.herokuapp.com/users/favourite/' + userId;
   // console.log(pathname);
   let res = await fetch(pathname, {
     method: "GET",
@@ -43,7 +43,7 @@ const postFavFetch = async (userId, itineraryId) => {
   //console.log("userId", userId);
   //console.log("itineraryId", itineraryId);
 
-  let res = await fetch('/users/favourite', {
+  let res = await fetch('https://mytinerary-back.herokuapp.com/users/favourite', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
